@@ -3,7 +3,9 @@ Plugin that adds ability to pick color from anywhere on desktop in Koikatu chara
 
 This allows you to quickly and accurately transfer colors from reference image to your character.
 
-![preview](https://user-images.githubusercontent.com/39247311/50300415-a7dd4080-0484-11e9-89bb-b0483dcf9cd7.gif)
+![preview](https://user-images.githubusercontent.com/39247311/50303116-694b8400-048c-11e9-8ca0-e58175926cc1.PNG)
+
+![preview animation](https://user-images.githubusercontent.com/39247311/50300415-a7dd4080-0484-11e9-89bb-b0483dcf9cd7.gif)
 
 ## How to use
 0. Get latest BepInEx.
