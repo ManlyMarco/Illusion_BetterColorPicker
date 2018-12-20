@@ -1,6 +1,8 @@
 # Better Color Picker for Koikatsu!
 Plugin that adds ability to pick color from anywhere on desktop in Koikatu character maker. The selected color is adjusted to look correct under the game's saturation filter by using the [ColorAdjuster](https://koikoi.happy.nu/#!plugin_color_adjuster.md) plugin.
 
+![preview](https://user-images.githubusercontent.com/39247311/50300415-a7dd4080-0484-11e9-89bb-b0483dcf9cd7.gif)
+
 ## How to use
 0. Get latest BepInEx.
 1. Extract dll files to your BepInEx directory.
