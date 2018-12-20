@@ -19,20 +19,20 @@ namespace BetterColorPicker
         public const string Version = "1.0";
 
         private const string BtnText = "Pick color from desktop";
-        private const string BtnTextActive = "Press any button to accept";
+        private const string BtnTextActive = "* Press any key to finish *";
 
         private static PickerSliderInput _pickerSliderInput;
         private static TextMeshProUGUI _textMeshPro;
 
-        private static bool capturing;
-        public static bool Capturing
+        private static bool _capturing;
+        private static bool Capturing
         {
-            get => capturing;
+            get => _capturing;
             set
             {
-                capturing = value;
+                _capturing = value;
                 if (_textMeshPro != null)
-                    _textMeshPro.text = capturing ? BtnTextActive : BtnText;
+                    _textMeshPro.text = _capturing ? BtnTextActive : BtnText;
             }
         }
 
@@ -62,7 +62,9 @@ namespace BetterColorPicker
             b.onClick.RemoveAllListeners();
             b.onClick.AddListener(() => Capturing = !Capturing);
 
-            _pickerSliderInput = (PickerSliderInput) __instance.GetType().GetField("cmpPickerSliderI", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(__instance);
+            _pickerSliderInput = (PickerSliderInput) __instance.GetType()
+                .GetField("cmpPickerSliderI", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(__instance);
         }
 
         private void OnApplicationFocus(bool hasFocus)
