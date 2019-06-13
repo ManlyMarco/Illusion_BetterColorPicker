@@ -11,12 +11,11 @@ using UnityEngine.UI;
 namespace BetterColorPicker
 {
     [BepInDependency("koikoi.happy.nu.color_adjuster")]
-    [BepInProcess("Koikatu")]
     [BepInPlugin(GUID, "Better Color Picker", Version)]
     public class BetterColorPicker : BaseUnityPlugin
     {
         public const string GUID = "marco.better_color_picker";
-        public const string Version = "1.0";
+        public const string Version = "1.0.1";
 
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
