@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Harmony;
-using ChaCustom;
 using HarmonyLib;
 using Illusion.Component.UI.ColorPicker;
 using IllusionUtility.GetUtility;
 using KKAPI.Utilities;
-using Studio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,8 +21,8 @@ namespace BetterColorPicker
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
 
-        private static Action<Color> _pickerSliderInput;
-        private static TextMeshProUGUI _textMeshPro;
+        private static Action<Color> _setColor;
+        private static TextMeshProUGUI _buttonText;
 
         private static bool _capturing;
         private static bool Capturing
@@ -34,75 +31,38 @@ namespace BetterColorPicker
             set
             {
                 _capturing = value;
-                if (_textMeshPro != null)
-                    _textMeshPro.text = _capturing ? BtnTextActive : BtnText;
+                if (_buttonText != null)
+                    _buttonText.text = _capturing ? BtnTextActive : BtnText;
             }
         }
 
         public ConfigEntry<bool> ColorAdjust { get; private set; }
 
-        /// <summary>
-        /// Maker color picker
-        /// </summary>
-        [HarmonyPatch(typeof(CvsColor), "Start")]
         [HarmonyPostfix]
-        public static void AddPickerButton(CvsColor __instance)
+        [HarmonyPatch(typeof(PickerSliderInput), "Start")]
+        public static void AddPickerButton(PickerSliderInput __instance)
         {
-            var originalBtn = GameObject.Find("Button/textDef").transform.parent;
-            var newBtn = Instantiate(originalBtn, __instance.transform.Find("menuSlider"), true);
+            var colorUiRoot = __instance.transform.parent;
+
+            var originalBtn = colorUiRoot.FindLoop("btnAllDelete");
+            var slidersTop = colorUiRoot.FindLoop("menuSlider");
+            var newBtn = Instantiate(originalBtn, slidersTop.transform, true);
             newBtn.name = "CursorPickBtn";
 
             var rt = newBtn.GetComponent<RectTransform>();
-            rt.offsetMin = new Vector2(-369, 10);
-            rt.offsetMax = new Vector2(-20, -175);
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = new Vector2(1, 0);
+            rt.offsetMin = new Vector2(15, 4);
+            rt.offsetMax = new Vector2(-15, 35);
 
-            _textMeshPro = newBtn.GetComponentInChildren<TextMeshProUGUI>();
-            _textMeshPro.text = BtnText;
+            _buttonText = newBtn.GetComponentInChildren<TextMeshProUGUI>();
+            _buttonText.text = BtnText;
 
             var b = newBtn.GetComponent<Button>();
             b.onClick.RemoveAllListeners();
             b.onClick.AddListener(() => Capturing = !Capturing);
 
-            var input = __instance.GetComponentInChildren<PickerSliderInput>();
-            if (input == null) throw new ArgumentNullException(nameof(input));
-            _pickerSliderInput = color => input.color = color;
-        }
-
-        /// <summary>
-        /// Studio color picker
-        /// </summary>
-        [HarmonyPatch(typeof(ColorPalette), "Awake")]
-        [HarmonyPostfix]
-        public static void AddPickerButtonStudio(ColorPalette __instance)
-        {
-            IEnumerator DelayedStudioInit()
-            {
-                yield return null;
-
-                var originalBtn = __instance.transform.FindLoop("btnAllDelete");
-                var slidersTop = __instance.transform.FindLoop("menuSlider");
-                var newBtn = Instantiate(originalBtn, slidersTop.transform, true);
-                newBtn.name = "CursorPickBtn";
-
-                var rt = newBtn.GetComponent<RectTransform>();
-                rt.anchorMin = Vector2.zero;
-                rt.anchorMax = new Vector2(1, 0);
-                rt.offsetMin = new Vector2(15, 4);
-                rt.offsetMax = new Vector2(-15, 35);
-
-                _textMeshPro = newBtn.GetComponentInChildren<TextMeshProUGUI>();
-                _textMeshPro.text = BtnText;
-
-                var b = newBtn.GetComponent<Button>();
-                b.onClick.RemoveAllListeners();
-                b.onClick.AddListener(() => Capturing = !Capturing);
-
-                var input = __instance.GetComponentInChildren<SampleColor>();
-                if (input == null) throw new ArgumentNullException(nameof(input));
-                _pickerSliderInput = color => input.UpdatePresetsColor(color);
-            }
-
-            ThreadingHelper.Instance.StartCoroutine(DelayedStudioInit());
+            _setColor = color => __instance.color = color;
         }
 
         private void OnApplicationFocus(bool hasFocus)
@@ -134,11 +94,11 @@ namespace BetterColorPicker
 
         private void UpdateColorToPointer()
         {
-            if (_pickerSliderInput != null)
+            if (_setColor != null)
             {
                 var color = MouseColour.Get();
                 color = ColorAdjust.Value ? LookupColor(color) : color;
-                _pickerSliderInput(color);
+                _setColor(color);
             }
             else
             {
