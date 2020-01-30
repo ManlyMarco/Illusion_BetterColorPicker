@@ -2,6 +2,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Harmony;
+using BepInEx.Logging;
 using HarmonyLib;
 using Illusion.Component.UI.ColorPicker;
 using IllusionUtility.GetUtility;
@@ -90,6 +91,7 @@ namespace BetterColorPicker
             var slidersTop = colorUiRoot.FindLoop("menuSlider");
             var newBtn = Instantiate(originalBtn, slidersTop.transform, true);
             newBtn.name = "CursorPickBtn";
+            newBtn.SetActive(true);
 
             var rt = newBtn.GetComponent<RectTransform>();
             rt.anchorMin = Vector2.zero;
