@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 namespace BetterColorPicker
 {
+    [BepInDependency(KKAPI.KoikatuAPI.GUID)]
     [BepInPlugin(GUID, "Better Color Picker", Version)]
     public class BetterColorPicker : BaseUnityPlugin
     {
