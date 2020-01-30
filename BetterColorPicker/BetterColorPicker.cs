@@ -40,12 +40,7 @@ namespace BetterColorPicker
 
         public ConfigEntry<bool> ColorAdjust { get; private set; }
 
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            Capturing = false;
-        }
-
-        private void Start()
+        private void Awake()
         {
             HarmonyWrapper.PatchAll(typeof(BetterColorPicker));
 
@@ -56,6 +51,11 @@ namespace BetterColorPicker
                 "When using default saturation filter the game colors are different than actual colors. " +
                 "Use this setting to adjust the color you capture to make it look correct under the saturation filter. " +
                 "If you do not use the saturation filter, disable this option to get the true color.");
+        }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            Capturing = false;
         }
 
         private void Update()
