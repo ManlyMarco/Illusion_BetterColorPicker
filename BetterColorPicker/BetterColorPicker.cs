@@ -21,6 +21,7 @@ namespace BetterColorPicker
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
 
+        private static Texture2D _lut;
         private static Action<Color> _setColor;
         private static TextMeshProUGUI _buttonText;
 
@@ -37,6 +38,46 @@ namespace BetterColorPicker
         }
 
         public ConfigEntry<bool> ColorAdjust { get; private set; }
+
+        private void OnApplicationFocus(bool hasFocus)
+        {
+            Capturing = false;
+        }
+
+        private void Start()
+        {
+            HarmonyWrapper.PatchAll(typeof(BetterColorPicker));
+
+            _lut = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            _lut.LoadImage(ResourceUtils.GetEmbeddedResource("lookuptexture.png"));
+
+            ColorAdjust = Config.Bind("", "Adjust color to saturation filter", true, 
+                "When using default saturation filter the game colors are different than actual colors. " +
+                "Use this setting to adjust the color you capture to make it look correct under the saturation filter. " +
+                "If you do not use the saturation filter, disable this option to get the true color.");
+        }
+
+        private void Update()
+        {
+            if (Capturing)
+            {
+                UpdateColorToPointer();
+                if (Input.anyKeyDown)
+                    Capturing = false;
+            }
+        }
+
+        private void UpdateColorToPointer()
+        {
+            if (_setColor != null)
+            {
+                var color = MouseColour.Get();
+                color = ColorAdjust.Value ? LookupColor(color) : color;
+                _setColor(color);
+            }
+            else
+                Capturing = false;
+        }
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(PickerSliderInput), "Start")]
@@ -65,47 +106,6 @@ namespace BetterColorPicker
             _setColor = color => __instance.color = color;
         }
 
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            Capturing = false;
-        }
-
-        private void Start()
-        {
-            HarmonyWrapper.PatchAll(typeof(BetterColorPicker));
-
-            _lut = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-            _lut.LoadImage(ResourceUtils.GetEmbeddedResource("lookuptexture.png"));
-
-            ColorAdjust = Config.Bind("", "Adjust color to saturation filter", true, "When using default saturation filter the game colors are different than actual colors. " +
-                                                                                       "Use this setting to adjust the color you capture to make it look correct under the saturation filter. " +
-                                                                                       "If you do not use the saturation filter, disable this option to get the true color.");
-        }
-
-        private void Update()
-        {
-            if (Capturing)
-            {
-                UpdateColorToPointer();
-                if (Input.anyKeyDown)
-                    Capturing = false;
-            }
-        }
-
-        private void UpdateColorToPointer()
-        {
-            if (_setColor != null)
-            {
-                var color = MouseColour.Get();
-                color = ColorAdjust.Value ? LookupColor(color) : color;
-                _setColor(color);
-            }
-            else
-            {
-                Capturing = false;
-            }
-        }
-
         /// <summary>
         /// Code and lut texture from koikoi.happy.nu.color_adjuster
         /// </summary>
@@ -126,7 +126,5 @@ namespace BetterColorPicker
             var pixel2 = _lut.GetPixel((int)(num8 * 512f), (int)(num9 * 512f));
             return Color.Lerp(pixel, pixel2, Mathf.Repeat(num, 1f));
         }
-
-        private static Texture2D _lut;
     }
 }
