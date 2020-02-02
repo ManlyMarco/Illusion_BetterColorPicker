@@ -2,7 +2,7 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Harmony;
-using BepInEx.Logging;
+using ChaCustom;
 using HarmonyLib;
 using Illusion.Component.UI.ColorPicker;
 using IllusionUtility.GetUtility;
@@ -48,7 +48,7 @@ namespace BetterColorPicker
             _lut = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             _lut.LoadImage(ResourceUtils.GetEmbeddedResource("lookuptexture.png"));
 
-            ColorAdjust = Config.Bind("", "Adjust color to saturation filter", true, 
+            ColorAdjust = Config.Bind("", "Adjust color to saturation filter", true,
                 "When using default saturation filter the game colors are different than actual colors. " +
                 "Use this setting to adjust the color you capture to make it look correct under the saturation filter. " +
                 "If you do not use the saturation filter, disable this option to get the true color.");
@@ -85,6 +85,8 @@ namespace BetterColorPicker
         [HarmonyPatch(typeof(PickerSliderInput), "Start")]
         public static void AddPickerButton(PickerSliderInput __instance)
         {
+            if (!__instance.GetComponentInParent<CvsColor>() && !__instance.GetComponentInParent<Studio.ColorPalette>()) return;
+
             var colorUiRoot = __instance.transform.parent;
 
             var originalBtn = colorUiRoot.FindLoop("btnAllDelete");
