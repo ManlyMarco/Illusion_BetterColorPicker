@@ -23,9 +23,6 @@ namespace BetterColorPicker
 #endif
     public class BetterColorPicker : BaseUnityPlugin
     {
-        public const string GUID = "marco.better_color_picker";
-        public const string Version = "2.0.2";
-
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
 
