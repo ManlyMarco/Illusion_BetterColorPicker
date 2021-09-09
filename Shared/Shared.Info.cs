@@ -42,6 +42,13 @@ namespace BetterColorPicker
         /// Version of the plug-in. Must be in form /<major/>./<minor/>./<build/>./<revision/>.
         /// Major and minor versions are mandatory, but build and revision can be left unspecified.
         /// </summary>
-        public const string Version = "2.0.2.0"; // Bump version inner working a bit different
+        public const string Version = "2.0.2.0";
+
+#if KK
+        internal const string Prefix = "KK";
+#elif KKS
+        internal const string Prefix = "KKS";
+#endif
+
     }
 }

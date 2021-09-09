@@ -13,7 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BetterColorPicker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ConfigurationManagerAttributes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MouseColour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Shared.Info.cs" />
