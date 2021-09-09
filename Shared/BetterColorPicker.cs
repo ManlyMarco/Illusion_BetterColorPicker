@@ -14,13 +14,17 @@ using PluginInfo = BetterColorPicker.Info;
 
 namespace BetterColorPicker
 {
-    [BepInDependency(KKAPI.KoikatuAPI.GUID)]
+    [BepInDependency(KKAPI.KoikatuAPI.GUID, KKAPI.KoikatuAPI.VersionConst)]
     [BepInPlugin(PluginInfo.GUID, "Better Color Picker", PluginInfo.Version)]
-    [BepInProcess(Constants.MainGameProcessName)]
+    [BepInProcess(KKAPI.KoikatuAPI.GameProcessName)]
+#if KK
+    [BepInProcess(KKAPI.KoikatuAPI.GameProcessNameSteam)]
+    [BepInProcess(KKAPI.KoikatuAPI.StudioProcessName)]
+#endif
     public class BetterColorPicker : BaseUnityPlugin
     {
-        //public const string GUID = "marco.better_color_picker";
-        //public const string Version = "2.0.2";
+        public const string GUID = "marco.better_color_picker";
+        public const string Version = "2.0.2";
 
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
@@ -45,7 +49,7 @@ namespace BetterColorPicker
 
         private void Awake()
         {
-            _ = Harmony.CreateAndPatchAll(typeof(BetterColorPicker));
+            Harmony.CreateAndPatchAll(typeof(BetterColorPicker));
 
             _lut = new Texture2D(1, 1, TextureFormat.ARGB32, false);
             _lut.LoadImage(ResourceUtils.GetEmbeddedResource("lookuptexture.png"));
