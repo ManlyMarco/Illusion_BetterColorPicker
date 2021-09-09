@@ -37,9 +37,8 @@
     <PackageReference Include="IllusionLibs.KoikatsuSunshine.Unity.TextMeshPro" Version="2019.4.9" />
     <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule" Version="2019.4.9" />
     <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.UI" Version="2019.4.9" />
-    <PackageReference Include="IllusionModdingAPI.KKSAPI" Version="1.25.0">
-      <PrivateAssets>runtime</PrivateAssets>
-      <IncludeAssets>All</IncludeAssets>
+    <PackageReference Include="IllusionModdingAPI.KKAPI" Version="1.25.0">
+      <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>
 </Project>
