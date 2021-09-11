@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterColorPicker.KKS", "BetterColorPicker.KKS\BetterColorPicker.KKS.csproj", "{12DBE1D7-6DE4-4294-898B-DCECB801DCBC}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{6776630E-D6C5-487E-B519-8722E306C00F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetterColorPicker.KK", "BetterColorPicker.KK\BetterColorPicker.KK.csproj", "{90BD1176-9F51-401D-BCD0-0EB7D8B5339C}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{12dbe1d7-6de4-4294-898b-dcecb801dcbc}*SharedItemsImports = 5
+		Shared\Shared.projitems*{6776630e-d6c5-487e-b519-8722e306c00f}*SharedItemsImports = 13
+		Shared\Shared.projitems*{90bd1176-9f51-401d-bcd0-0eb7d8b5339c}*SharedItemsImports = 5
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12DBE1D7-6DE4-4294-898B-DCECB801DCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12DBE1D7-6DE4-4294-898B-DCECB801DCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12DBE1D7-6DE4-4294-898B-DCECB801DCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12DBE1D7-6DE4-4294-898B-DCECB801DCBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90BD1176-9F51-401D-BCD0-0EB7D8B5339C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90BD1176-9F51-401D-BCD0-0EB7D8B5339C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90BD1176-9F51-401D-BCD0-0EB7D8B5339C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90BD1176-9F51-401D-BCD0-0EB7D8B5339C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2B6E6427-2A51-4918-B102-0E9D2E0FE4B4}
+	EndGlobalSection
+EndGlobal

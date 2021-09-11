@@ -10,12 +10,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-using PluginInfo = BetterColorPicker.Info;
-
 namespace BetterColorPicker
 {
     [BepInDependency(KKAPI.KoikatuAPI.GUID, KKAPI.KoikatuAPI.VersionConst)]
-    [BepInPlugin(PluginInfo.GUID, "Better Color Picker", PluginInfo.Version)]
+    [BepInPlugin(GUID, PluginName, Version)]
     [BepInProcess(KKAPI.KoikatuAPI.GameProcessName)]
 #if KK
     [BepInProcess(KKAPI.KoikatuAPI.GameProcessNameSteam)]
@@ -23,6 +21,11 @@ namespace BetterColorPicker
 #endif
     public class BetterColorPicker : BaseUnityPlugin
     {
+        public const string PluginName = "Better Color Picker";
+        public const string GUID = "marco.better_color_picker";
+        // Version of the plug-in. Must be in form: major.minor[.build][.revision]
+        public const string Version = "2.0.2.0";
+
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
 

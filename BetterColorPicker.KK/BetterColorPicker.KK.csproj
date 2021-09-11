@@ -4,7 +4,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <RootNamespace>BetterColorPicker</RootNamespace>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <AssemblyName>KK_BetterColorPicker</AssemblyName>
     <ApplicationIcon />
     <PackageProjectUrl>https://github.com/ManlyMarco/KK_BetterColorPicker</PackageProjectUrl>
@@ -15,22 +15,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE;KK</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <OutputPath>..\bin\Debug\KK</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DefineConstants>TRACE;KK</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <OutputPath>..\bin\Debug\KK\x64</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DefineConstants>TRACE;KK</DefineConstants>
-    <OutputPath>..\bin\Release\KK\x64</OutputPath>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>bin\Debug</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>TRACE;KK</DefineConstants>
-    <OutputPath>..\bin\Release\KK</OutputPath>
+    <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
   <ItemGroup>
@@ -41,4 +31,7 @@
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(OutDir)$(TargetFileName)&quot; ..\bin" />
+  </Target>
 </Project>

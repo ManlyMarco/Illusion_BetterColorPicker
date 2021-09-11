@@ -13,8 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BetterColorPicker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MouseColour.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Shared.Info.cs" />
   </ItemGroup>
 </Project>
