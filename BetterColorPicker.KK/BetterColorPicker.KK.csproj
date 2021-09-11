@@ -24,9 +24,7 @@
   </PropertyGroup>
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
   <ItemGroup>
-    <PackageReference Include="IllusionLibs.KoikatsuSunshine.Unity.TextMeshPro" Version="2019.4.9" />
-    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule" Version="2019.4.9" />
-    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.UI" Version="2019.4.9" />
+    <PackageReference Include="IllusionLibs.Koikatu.TextMeshPro" Version="2019.4.27.4" />
     <PackageReference Include="IllusionModdingAPI.KKAPI" Version="1.25.0">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
