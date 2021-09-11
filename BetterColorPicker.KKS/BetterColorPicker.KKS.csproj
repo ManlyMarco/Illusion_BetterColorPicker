@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>BetterColorPicker</RootNamespace>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>KKS_BetterColorPicker</AssemblyName>
+    <ApplicationIcon />
+    <PackageProjectUrl>https://github.com/ManlyMarco/KK_BetterColorPicker</PackageProjectUrl>
+    <Authors>ManlyMarco</Authors>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/ManlyMarco/KK_BetterColorPicker</RepositoryUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;KKS</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>..\bin\Debug\KKS</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>TRACE;KKS</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>..\bin\Debug\KKS\x64</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>TRACE;KKS</DefineConstants>
+    <OutputPath>..\bin\Release\KKS\x64</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <OutputPath>..\bin\Release\KKS</OutputPath>
+    <DefineConstants>TRACE;KKS</DefineConstants>
+  </PropertyGroup>
+  <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+  <ItemGroup>
+    <PackageReference Include="IllusionLibs.BepInEx" Version="5.4.15" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.Assembly-CSharp" Version="2021.8.27.2" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.Assembly-CSharp-firstpass" Version="2021.8.27.2" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.Unity.TextMeshPro" Version="2019.4.9" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule" Version="2019.4.9" />
+    <PackageReference Include="IllusionLibs.KoikatsuSunshine.UnityEngine.UI" Version="2019.4.9" />
+    <PackageReference Include="IllusionModdingAPI.KKSAPI" Version="1.25.0">
+      <IncludeAssets>All</IncludeAssets>
+      <PrivateAssets>runtime</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>
