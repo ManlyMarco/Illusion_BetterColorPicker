@@ -1,12 +1,12 @@
 # Better Color Picker for Koikatsu!
-Plugin for BepInEx 5 that adds ability to pick color from anywhere on desktop in Koikatu character maker and studio. The selected color is adjusted to look correct under the game's saturation filter. This allows you to quickly and accurately transfer colors from reference image to your character.
+Plugin for some games by Illusion that adds ability to pick color from anywhere on desktop in character maker and studio. The selected color is adjusted to look correct under the game's saturation filter. This allows you to quickly and accurately transfer colors from reference image to your character.
 
 ![preview](https://user-images.githubusercontent.com/39247311/50303116-694b8400-048c-11e9-8ca0-e58175926cc1.PNG)
 
 ![preview animation](https://user-images.githubusercontent.com/39247311/50300415-a7dd4080-0484-11e9-89bb-b0483dcf9cd7.gif)
 
 ## How to use
-0. Get BepInEx 5.x and KKAPI if you don't have them already.
+0. Get latest version of BepInEx 5.x and ModdingAPI if you don't have them already.
 1. Download the latest release and extract dll files to your BepInEx\plugins directory.
 2. Start the main game and open character maker or start studio.
 3. Edit any color to make color picker appear, then enter the "Sliders" tab and click on the "Pick color from desktop" button.
