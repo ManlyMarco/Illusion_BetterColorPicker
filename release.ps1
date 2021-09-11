@@ -1,5 +1,4 @@
-$array = @("KK_BetterColorPicker")
-
+# Env setup ---------------
 if ($PSScriptRoot -match '.+?\\bin\\?') {
     $dir = $PSScriptRoot + "\"
 }
@@ -7,24 +6,39 @@ else {
     $dir = $PSScriptRoot + "\bin\"
 }
 
-$out = $dir + "BepInEx\plugins\" 
+$copy = $dir + "\copy\BepInEx\plugins" 
 
-$ver = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($dir + $array[0] + ".dll").FileVersion.ToString()
+New-Item -ItemType Directory -Force -Path ($dir + "\out\")
 
+# Create releases ---------
+function CreateZip ($pluginFile)
+{
+    Remove-Item -Force -Path ($dir + "\copy") -Recurse -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Force -Path $copy
 
-New-Item -ItemType Directory -Force -Path ($dir + "out\")
+    # the actual dll
+    Copy-Item -Path $pluginFile.FullName -Destination $copy -Recurse -Force
+    # the docs xml if it exists
+    Copy-Item -Path ($pluginFile.DirectoryName + "\" + $pluginFile.BaseName + ".xml") -Destination $copy -Recurse -Force -ErrorAction Ignore
 
-foreach ($element in $array) {
+    # the replace removes .0 from the end of version up until it hits a non-0 or there are only 2 version parts remaining (e.g. v1.0 v1.0.1)
+    $ver = (Get-ChildItem -Path ($copy) -Filter "*.dll" -Recurse -Force)[0].VersionInfo.FileVersion.ToString() -replace "^([\d+\.]+?\d+)[\.0]*$", '${1}'
 
-Remove-Item -Force -Path ($out + "*") -ErrorAction SilentlyContinue
-New-Item -ItemType Directory -Force -Path $out
-
-Copy-Item -Path ($dir + $element + ".dll") -Destination $out
-Copy-Item -Path ($dir + $element + ".xml") -Destination $out -ErrorAction SilentlyContinue
-
-Compress-Archive -Path ($dir + "BepInEx") -Force -CompressionLevel "Optimal" -DestinationPath ($dir + "out\" + $element + "_" + $ver + ".zip")
-
+    Compress-Archive -Path ($copy + "\..\") -Force -CompressionLevel "Optimal" -DestinationPath ($dir + "\out\" + $pluginFile.BaseName + "_" + "v" + $ver + ".zip")
 }
 
-Remove-Item -Force -Path ($out + "*")
-Remove-Item -Force -Path ($dir + "BepInEx") -Recurse
+foreach ($pluginFile in Get-ChildItem -Path $dir -Filter *.dll) 
+{
+    try
+    {
+        CreateZip ($pluginFile)
+    }
+    catch 
+    {
+        # retry
+        CreateZip ($pluginFile)
+    }
+}
+
+
+Remove-Item -Force -Path ($dir + "\copy") -Recurse
