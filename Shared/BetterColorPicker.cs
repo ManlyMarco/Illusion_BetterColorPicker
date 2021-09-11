@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using BepInEx;
 using BepInEx.Configuration;
 using ChaCustom;
@@ -32,6 +33,7 @@ namespace BetterColorPicker
         private static Texture2D _lut;
         private static Action<Color> _setColor;
         private static TextMeshProUGUI _buttonText;
+        private static BetterColorPicker _instance;
 
         private static bool _capturing;
         private static bool Capturing
@@ -39,9 +41,18 @@ namespace BetterColorPicker
             get => _capturing;
             set
             {
-                _capturing = value;
-                if (_buttonText != null)
-                    _buttonText.text = _capturing ? BtnTextActive : BtnText;
+                if (_capturing != value)
+                {
+                    _capturing = value;
+
+                    if (_buttonText != null)
+                        _buttonText.text = _capturing ? BtnTextActive : BtnText;
+
+                    if (_capturing)
+                        _instance.StartCoroutine(_instance.CaptureCo());
+                    else
+                        _instance.StopAllCoroutines();
+                }
             }
         }
 
@@ -49,6 +60,8 @@ namespace BetterColorPicker
 
         private void Awake()
         {
+            _instance = this;
+
             Harmony.CreateAndPatchAll(typeof(BetterColorPicker));
 
             _lut = new Texture2D(1, 1, TextureFormat.ARGB32, false);
@@ -65,10 +78,11 @@ namespace BetterColorPicker
             Capturing = false;
         }
 
-        private void Update()
+        private IEnumerator CaptureCo()
         {
-            if (Capturing)
+            while (Capturing)
             {
+                yield return null;
                 UpdateColorToPointer();
                 if (Input.anyKeyDown)
                     Capturing = false;
