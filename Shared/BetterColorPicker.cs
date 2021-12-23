@@ -16,9 +16,9 @@ namespace BetterColorPicker
     [BepInDependency(KKAPI.KoikatuAPI.GUID, KKAPI.KoikatuAPI.VersionConst)]
     [BepInPlugin(GUID, PluginName, Version)]
     [BepInProcess(KKAPI.KoikatuAPI.GameProcessName)]
+    [BepInProcess(KKAPI.KoikatuAPI.StudioProcessName)]
 #if KK
     [BepInProcess(KKAPI.KoikatuAPI.GameProcessNameSteam)]
-    [BepInProcess(KKAPI.KoikatuAPI.StudioProcessName)]
 #endif
     public class BetterColorPicker : BaseUnityPlugin
     {
@@ -102,7 +102,7 @@ namespace BetterColorPicker
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(PickerSliderInput), "Start")]
+        [HarmonyPatch(typeof(PickerSliderInput), nameof(PickerSliderInput.Start))]
         public static void AddPickerButton(PickerSliderInput __instance)
         {
             if (!__instance.GetComponentInParent<CvsColor>() && !__instance.GetComponentInParent<Studio.ColorPalette>()) return;
