@@ -129,6 +129,44 @@ namespace BetterColorPicker
             b.onClick.AddListener(() => Capturing = !Capturing);
 
             _setColor = color => __instance.color = color;
+
+            // Spawn a HEX textbox next to the HSV/RGB toggles
+            var textboxCopy = GameObject.Instantiate(__instance.inputR.gameObject, __instance.transform.Find("ColorMode"), false);
+            textboxCopy.name = "HexTextbox";
+
+            var textboxRt = textboxCopy.GetComponent<RectTransform>();
+            textboxRt.localPosition = new Vector3(195, 4, 0);
+            textboxRt.sizeDelta = new Vector2(150, 28);
+
+            var textbox = textboxCopy.GetComponent<TMP_InputField>();
+            textbox.characterLimit = 9;
+            textbox.characterValidation = TMP_InputField.CharacterValidation.None;
+            textbox.contentType = TMP_InputField.ContentType.Standard;
+            textbox.onValueChanged.ActuallyRemoveAllListeners();
+            textbox.onValueChanged.AddListener(OnTextboxTextChanged);
+
+            __instance.updateColorAction += UpdateTextboxHexText;
+
+            // Probably unnecessary, but just in case
+            UpdateTextboxHexText(__instance.color);
+
+            void OnTextboxTextChanged(string hexStr)
+            {
+                if (ColorUtility.TryParseHtmlString(hexStr, out var resultColor))
+                {
+                    if (resultColor != __instance.color) _setColor(resultColor);
+
+                    textbox.targetGraphic.color = Color.white;
+                }
+                else
+                {
+                    textbox.targetGraphic.color = Color.red;
+                }
+            }
+            void UpdateTextboxHexText(Color newColor)
+            {
+                textbox.text = "#" + ColorUtility.ToHtmlStringRGBA(newColor);
+            }
         }
 
         /// <summary>
