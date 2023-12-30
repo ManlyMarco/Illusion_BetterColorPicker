@@ -144,28 +144,43 @@ namespace BetterColorPicker
             textbox.contentType = TMP_InputField.ContentType.Standard;
             textbox.onValueChanged.ActuallyRemoveAllListeners();
             textbox.onValueChanged.AddListener(OnTextboxTextChanged);
+            textbox.onSubmit.AddListener(OnTexboxSubmit);
+            textbox.onDeselect.AddListener(OnTexboxSubmit);
 
             __instance.updateColorAction += UpdateTextboxHexText;
 
             // Probably unnecessary, but just in case
             UpdateTextboxHexText(__instance.color);
 
-            void OnTextboxTextChanged(string hexStr)
+            bool VerifyColor(string hexStr, bool submit = false)
             {
+                string altHexStr = "#" + hexStr.TrimStart('#');
                 if (ColorUtility.TryParseHtmlString(hexStr, out var resultColor))
                 {
-                    if (resultColor != __instance.color) _setColor(resultColor);
-
-                    textbox.targetGraphic.color = Color.white;
+                    if (submit) _setColor(resultColor);
+                    return true;
                 }
-                else
+                else if (ColorUtility.TryParseHtmlString(altHexStr, out var resultColor2))
                 {
-                    textbox.targetGraphic.color = Color.red;
+                    if(submit) _setColor(resultColor2);
+                    return true;
                 }
+                return false;
+            }
+            void OnTextboxTextChanged(string hexStr)
+            {
+                if(VerifyColor(hexStr))
+                    textbox.targetGraphic.color = Color.white;
+                else
+                    textbox.targetGraphic.color = Color.red;
             }
             void UpdateTextboxHexText(Color newColor)
             {
                 textbox.text = "#" + ColorUtility.ToHtmlStringRGBA(newColor);
+            }
+            void OnTexboxSubmit(string hexStr)
+            {
+                VerifyColor(hexStr, true);
             }
         }
 
