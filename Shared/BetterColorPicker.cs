@@ -149,6 +149,26 @@ namespace BetterColorPicker
 
             __instance.updateColorAction += UpdateTextboxHexText;
 
+            var copyBtn = Instantiate(originalBtn, __instance.transform.Find("ColorMode"), false);
+            copyBtn.name = "CopyHexButton";
+
+
+            var copyBtnRt = copyBtn.GetComponent<RectTransform>();
+            copyBtnRt.localPosition = new Vector3(130, -24, 0);
+            copyBtnRt.sizeDelta = new Vector2(65, 28);
+
+            copyBtnRt.GetComponentInChildren<TextMeshProUGUI>().text = "Copy";
+
+            var copyB = copyBtn.GetComponent<Button>();
+            copyB.onClick.RemoveAllListeners();
+            copyB.onClick.AddListener(() =>
+            {
+                if(Input.GetKey(KeyCode.LeftShift))
+                    GUIUtility.systemCopyBuffer = textbox.text.Trim('#');
+                else
+                    GUIUtility.systemCopyBuffer = textbox.text.Substring(1, textbox.text.Length - 3);
+            });
+
             // Probably unnecessary, but just in case
             UpdateTextboxHexText(__instance.color);
 
