@@ -151,7 +151,7 @@ namespace BetterColorPicker
 
             var copyBtn = Instantiate(originalBtn, __instance.transform.Find("ColorMode"), false);
             copyBtn.name = "CopyHexButton";
-
+            copyBtn.SetActive(true);
 
             var copyBtnRt = copyBtn.GetComponent<RectTransform>();
             copyBtnRt.localPosition = new Vector3(130, -24, 0);
