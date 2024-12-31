@@ -79,7 +79,7 @@ namespace BetterColorPicker
         private void MakePickerDraggable()
         {
             var go = GameObject.Find("CustomScene/CustomRoot/FrontUIGroup/CustomUIGroup/CvsColor/Top");
-            go?.AddComponent<DragObject>();
+            go?.GetOrAddComponent<DragObject>();
         }
 
         private void OnApplicationFocus(bool hasFocus)
