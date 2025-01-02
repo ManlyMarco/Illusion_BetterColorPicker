@@ -25,7 +25,7 @@ namespace BetterColorPicker
         public const string PluginName = "Better Color Picker";
         public const string GUID = "marco.better_color_picker";
         // Version of the plug-in. Must be in form: major.minor[.build][.revision]
-        public const string Version = "3.1.1";
+        public const string Version = "3.2";
 
         private const string BtnText = "Pick color from desktop";
         private const string BtnTextActive = "* Press any key to finish *";
