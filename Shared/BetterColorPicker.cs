@@ -6,7 +6,6 @@ using ChaCustom;
 using HarmonyLib;
 using Illusion.Component.UI.ColorPicker;
 using IllusionUtility.GetUtility;
-using KKAPI;
 using KKAPI.Utilities;
 using TMPro;
 using UnityEngine;
@@ -73,13 +72,12 @@ namespace BetterColorPicker
                 "Use this setting to adjust the color you capture to make it look correct under the saturation filter. " +
                 "If you do not use the saturation filter, disable this option to get the true color.");
 
-            KKAPI.Maker.MakerAPI.MakerFinishedLoading += (sender, e) => { MakePickerDraggable(); };
-        }
-
-        private void MakePickerDraggable()
-        {
-            var go = GameObject.Find("CustomScene/CustomRoot/FrontUIGroup/CustomUIGroup/CvsColor/Top");
-            go?.GetOrAddComponent<DragObject>();
+            KKAPI.Maker.MakerAPI.MakerFinishedLoading += (sender, e) =>
+            {
+                // Tested in KK and KKS
+                var go = GameObject.Find("CustomScene/CustomRoot/FrontUIGroup/CustomUIGroup/CvsColor/Top");
+                go?.GetOrAddComponent<DragObject>();
+            };
         }
 
         private void OnApplicationFocus(bool hasFocus)
